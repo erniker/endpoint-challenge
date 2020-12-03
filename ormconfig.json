@@ -1,0 +1,19 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "EndpointChallenge",
+  "entities": [
+    "/home/erniker/endpoint-challenge/src/config/../**/*.entity.{js,ts}"
+  ],
+  "synchronize": false,
+  "migrationsTableName": "migrations",
+  "migrations": [
+    "migrations/*.{js,ts}"
+  ],
+  "cli": {
+    "migrationsDir": "migrations"
+  }
+}

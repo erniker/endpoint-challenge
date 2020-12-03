@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { typeOrmConfig } from './config/typeorm.config'
-import { CatalogModule } from './contact/infrastructure/catalog.module'
+import { MobileCatalogModule } from './mobileCatalog/infrastructure/mobileCatalog.module'
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
-    CatalogModule,
+    MobileCatalogModule,
   ],
   controllers: [],
   providers: [],

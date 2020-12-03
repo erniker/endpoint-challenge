@@ -9,7 +9,7 @@ export class CreateMobileCatalogDto {
 
     @ApiProperty()
     @IsString()
-    @MaxLength(25)
+    @MaxLength(50)
     @IsNotEmpty()
     name: string
 
