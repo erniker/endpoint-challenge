@@ -5,7 +5,7 @@ import {
 } from '../domain/repository/mobileCatalog.repository'
 import { CreateMobileCatalogDto } from '../domain/dto/create-mobileCatalog.dto'
 import { UpdateMobileCatalogDto } from '../domain/dto/update-mobileCatalog.dto'
-import { MobileCatalogDto } from '../domain/dto/mobileCatalog.dto'
+import { MobileCatalogDto } from '../../commons/dto/mobileCatalog.dto'
 
 @Injectable()
 export class MobileCatalogService {

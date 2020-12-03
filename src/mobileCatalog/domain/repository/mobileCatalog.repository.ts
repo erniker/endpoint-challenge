@@ -1,6 +1,6 @@
 import { CreateMobileCatalogDto } from '../dto/create-mobileCatalog.dto'
 import { UpdateMobileCatalogDto } from '../dto/update-mobileCatalog.dto'
-import { MobileCatalogDto } from '../dto/mobileCatalog.dto'
+import { MobileCatalogDto } from '../../../commons/dto/mobileCatalog.dto'
 
 export interface MobileCatalogRepository {
   createMobile(

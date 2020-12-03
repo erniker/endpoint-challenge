@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common'
 import { CreateMobileCatalogDto } from '../../domain/dto/create-mobileCatalog.dto'
 import { MobileCatalogService } from '../../application/mobileCatalog.service'
-import { MobileCatalogDto } from '../../domain/dto/mobileCatalog.dto'
+import { MobileCatalogDto } from '../../../commons/dto/mobileCatalog.dto'
 import {
     UpdateMobileCatalogDto
 } from '../../domain/dto/update-mobileCatalog.dto'
