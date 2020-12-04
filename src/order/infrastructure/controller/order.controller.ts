@@ -4,24 +4,17 @@ import {
     Body,
     UsePipes,
     ValidationPipe,
-    Logger
 } from '@nestjs/common'
-
 import { OrderService } from '../../../order/application/order.service'
 import { CreateOrderDto } from '../../domain/dto/create-order.dto'
 import { OrderDto } from '../../../commons/dto/order.dto'
 
 
 @Controller('orders')
-export class OrdersController {
-    private logger = new Logger('OrdersController')
+export class OrderController {
+    constructor(private orderService: OrderService) { }
 
-    constructor(
-        private orderService: OrderService) { }
-
-    @Post()
+    @Post('calculateCart')
     @UsePipes(ValidationPipe)
-    async createOrder(
-        @Body() createOrderDto: CreateOrderDto,
-    ): Promise<OrderDto> { return new OrderDto }
+    async calculateCart(@Body() createOrder: CreateOrderDto): Promise<OrderDto> { return new OrderDto }
 }

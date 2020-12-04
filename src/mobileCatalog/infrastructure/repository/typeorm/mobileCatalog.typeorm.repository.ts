@@ -11,8 +11,7 @@ import { MobileCatalogRepository } from '../../../domain/repository/mobileCatalo
 import { CreateMobileCatalogDto } from '../../../domain/dto/create-mobileCatalog.dto'
 import { MobileCatalogDto } from '../../../../commons/dto/mobileCatalog.dto'
 import { UpdateMobileCatalogDto } from '../../../domain/dto/update-mobileCatalog.dto'
-import { psCodes } from '../psCodes.enum'
-
+import { psCodes } from '../../../../commons/psCodes.enum'
 
 @EntityRepository(MobileCatalog)
 export class MobileCatalogRepositoryTypeorm extends Repository<MobileCatalog>
@@ -98,6 +97,10 @@ export class MobileCatalogRepositoryTypeorm extends Repository<MobileCatalog>
                 }
             })
         } catch (err) {
+            if (err instanceof NotFoundException)
+                throw new NotFoundException("Customer doesn't exists")
+            if (err instanceof BadRequestException)
+                throw new BadRequestException()
             throw new InternalServerErrorException()
         }
     }

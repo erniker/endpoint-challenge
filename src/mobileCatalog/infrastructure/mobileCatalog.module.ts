@@ -7,5 +7,6 @@ import { MobileCatalogService } from '../application/mobileCatalog.service'
 @Module({
     controllers: [MobileCatalogController],
     providers: [MobileCatalogService, ...DatabaseProviders, ...MobileCatalogProviders],
+    exports: [MobileCatalogService]
 })
 export class MobileCatalogModule { }
