@@ -28,25 +28,20 @@ export class OrderController {
     async createOrder(
         @Body() createOrderDto: CreateOrderDto,
     ): Promise<OrderDto> {
-
-        const order = await this.orderService.createOrder(
-            createOrderDto,
-        )
+        const order = await this.orderService.createOrder(createOrderDto)
+        console.log(order)
         return order
-
     }
+
     @Put('/:id')
     @UsePipes(ValidationPipe)
     updateOrder(
         @Param('id', ParseUUIDPipe) id: string,
         @Body()
-        updateOrderDto: UpdateOrderDto,
-    ): Promise<void> {
-        return this.orderService.updateOrder(
-            id,
-            updateOrderDto
-        )
+        updateOrderDto: UpdateOrderDto): Promise<void> {
+        return this.orderService.updateOrder(id, updateOrderDto)
     }
+
     @Get()
     async getOrders(): Promise<OrderDto[]> {
         return this.orderService.getOrders()
@@ -54,7 +49,7 @@ export class OrderController {
 
     @Get('/:id')
     getOrderById(
-        @Param('id', ParseUUIDPipe) id: string,
+        @Param('id', ParseUUIDPipe) id: string
     ): Promise<OrderDto> {
         return this.orderService.getOrderById(id)
     }
