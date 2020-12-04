@@ -1,3 +1,4 @@
+import { Order } from '../../../../order/infrastructure/repository/typeorm/order.typeorm.entity'
 import {
   BaseEntity,
   Entity,
@@ -6,6 +7,7 @@ import {
   Unique,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm'
 
 @Entity()
@@ -28,4 +30,12 @@ export class Customer extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: string
+
+  @OneToMany(
+    type => Order,
+    order => order.customer,
+    { eager: false },
+  )
+  orders: Order[]
+
 }

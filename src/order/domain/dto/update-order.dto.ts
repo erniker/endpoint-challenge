@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty, IsString } from 'class-validator'
-//import { OrderMobileDto } from './orderMobile.dto'
-export class CreateOrderDto {
+import { OrderMobileDto } from './orderMobile.dto'
+
+export class UpdateOrderDto {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
@@ -9,10 +10,9 @@ export class CreateOrderDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    orderMobile: any[] //string[]? array de id de mobiles del catalogo
+    orderMobile: any[]
 
     @ApiProperty()
     @IsNotEmpty()
     totalPrice: number
-
 }

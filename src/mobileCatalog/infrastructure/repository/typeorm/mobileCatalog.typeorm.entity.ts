@@ -6,8 +6,9 @@ import {
     Unique,
     CreateDateColumn,
     UpdateDateColumn,
+    OneToMany,
 } from 'typeorm'
-
+import { OrderMobile } from '../../../../order/infrastructure/repository/typeorm/orderMobile.typeorm.entity'
 @Entity()
 @Unique(['name'])
 export class MobileCatalog extends BaseEntity {
@@ -31,4 +32,11 @@ export class MobileCatalog extends BaseEntity {
 
     @UpdateDateColumn()
     updatedAt: string
+
+    @OneToMany(
+        type => OrderMobile,
+        orderMobile => orderMobile.mobile,
+        { eager: false })
+    public orderMobile!: OrderMobile[];
+
 }

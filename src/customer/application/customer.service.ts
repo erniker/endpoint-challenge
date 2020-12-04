@@ -1,4 +1,4 @@
-import { Injectable, Logger, Inject } from '@nestjs/common'
+import { Injectable, Inject } from '@nestjs/common'
 import {
   CUSTOMER_REPOSITORY,
   CustomerRepository,

@@ -1,35 +1,70 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Inject } from '@nestjs/common'
+import {
+    ORDER_REPOSITORY,
+    OrderRepository,
+} from '../domain/repository/order.repository'
 import { CreateOrderDto } from '../domain/dto/create-order.dto'
-import { OrderDto } from '../../commons/dto/order.dto'
+import { UpdateOrderDto } from '../domain/dto/update-order.dto'
+import { OrderDto } from '../domain/dto/order.dto'
 import { MobileCatalogService } from '../../mobileCatalog/application/mobileCatalog.service'
 import { MobileCatalogDto } from 'src/commons/dto/mobileCatalog.dto'
 
 @Injectable()
 export class OrderService {
     constructor(
+        @Inject(ORDER_REPOSITORY)
+        private orderRepository: OrderRepository,
         private mobileCatalogService: MobileCatalogService,
     ) { }
 
-    async checkCart(createOrder: CreateOrderDto): Promise<boolean> {
-        const check = true
+    async createOrder(createOrder: CreateOrderDto): Promise<OrderDto> {
 
-        createOrder.cart.forEach(pickedMobile => {
+        const { customerId, orderMobile } = createOrder
 
-            const mobile = this.mobileCatalogService.getMobileById(pickedMobile.id)
-            if (!mobile) return false
-        });
+        // Calculate Final price from catalog
+        const totalPrice = await this.calculateFinalPrice(orderMobile)
 
-        return check
+        const createdOrder: CreateOrderDto = {
+            customerId: customerId,
+            orderMobile: orderMobile,
+            totalPrice: totalPrice
+        }
+        return this.orderRepository.createOrder(createdOrder)
     }
 
-    async calculateCart(createOrder: CreateOrderDto): Promise<OrderDto> {
+    // Use with caution
+    async updateOrder(
+        orderId: string,
+        updateCostumer: UpdateOrderDto,
+    ): Promise<void> {
+        return this.orderRepository.updateOrder(
+            orderId,
+            updateCostumer,
+        )
+    }
 
-        // Check if all mobile in cart exist on DB
-        //const
+    async getOrders(): Promise<OrderDto[]> {
+        return this.orderRepository.getOrders()
+    }
+
+    async getOrderById(orderId: string): Promise<OrderDto> {
+        return this.orderRepository.getOrderById(orderId)
+    }
+
+    async deleteOrder(orderId: string): Promise<void> {
+        return this.orderRepository.deleteOrder(orderId)
+    }
 
 
+    async calculateFinalPrice(mobileIds: string[]): Promise<number> {
+        let totalPrice = 0
 
+        for (let i = 0; i < mobileIds.length; i++) {
+            // Get mobileInfo from Catalog
+            const mobile: MobileCatalogDto = await this.mobileCatalogService.getMobileById(mobileIds[i])
 
-        return new OrderDto
+            totalPrice = totalPrice + mobile.price
+        }
+        return totalPrice
     }
 }
