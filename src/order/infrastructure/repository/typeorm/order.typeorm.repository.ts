@@ -9,7 +9,6 @@ import { OrderRepository } from '../../../domain/repository/order.repository'
 import { OrderDto } from '../../../domain/dto/order.dto'
 import { CreateOrderDto } from '../../../domain/dto/create-order.dto'
 import { UpdateOrderDto } from '../../../domain/dto/update-order.dto'
-import { MobileCatalogDto } from 'src/commons/dto/mobileCatalog.dto'
 
 @EntityRepository(Order)
 export class OrderRepositoryTypeorm extends Repository<Order>
@@ -29,6 +28,9 @@ export class OrderRepositoryTypeorm extends Repository<Order>
       order.totalPrice = totalPrice
 
       await order.save()
+
+      console.log(order)
+
       return order
 
     } catch (error) {
