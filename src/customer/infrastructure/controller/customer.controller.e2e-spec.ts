@@ -4,7 +4,7 @@ import * as request from 'supertest'
 import { AppModule } from '../../../app.module'
 import { getConnection } from 'typeorm'
 
-const mockId = 'z99z99z9-9z99-999z-9z99-999999z9zzz9'
+const mockId = 'z99z99z9-9z99-999z-9z99-999999z9zzz8'
 
 const mockCustomer = {
   name: 'pepe',
