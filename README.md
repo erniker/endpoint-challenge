@@ -1,75 +1,95 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Super Endpoint Challenge
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A simple endpoit to manage a catalog of mobiles, order and customer
 
-## Description
+## Starting-up 🚀
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+_Follow the next steps to run the project_
 
-## Installation
+### Installing 🔧
+
+Download project: 
 
 ```bash
-$ npm install
+# From Source
+git clone https://github.com/erniker/endpoint-challenge.git
+cd contactApp
 ```
 
-## Running the app
+Then install dependencies:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+yarn install
 ```
+You need configure a .env file in ./src. You can use .env.example.
 
-## Test
 
+You need have an a postgres db called contactApp. You could use dockers by typing a command like this:
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker run --name endpointChallenge -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432
 ```
 
-## Support
+And now, make migrations:
+```bash
+yarn db:migration:create first-migration
+```
+After this:
+```bash
+yarn db:migration:run
+```
+And, in order to avoid compilation errors:
+```bash
+yarn db:migration:to-js
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Running app ⭐
 
-## Stay in touch
+To run in dev mode:
+```bash
+yarn start:dev
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Running tests ⚙️
 
-## License
+- You must to create the DB contactsApp-test to run all the behavioural tests there
 
-  Nest is [MIT licensed](LICENSE).
+- Run `yarn test:unit` to get the unit tests executed
+- Run `yarn test:behaviour` to get the behavioural tests executed
+- Run `yarn test:unit:cov` to get a unit test coverage report
+- Run `yarn test:cov` to get a full coverage report
+
+## Docker 🐋
+
+You can dockerize the app using de Dockerfile and Docker-compose files, running the follow comands:
+```bash
+docker-compose build
+docker-compose up -d
+```
+
+To stop container:
+```bash
+docker-compose stop
+```
+
+To delete container:
+```bash
+docker-compose down
+```
+
+
+
+## Built with 🛠️
+
+* [NodeJS](https://nodejs.org/es/) - A JavaScript runtim
+* [NestJS](https://nestjs.com/) - A progressive Node.js framework
+
+## Author ✒️
+* **José Pablo Medina Grande** - [erniker](https://github.com/erniker)
+
+## Acknowledgement 🎁
+
+* To Frzurita, who taught me almost everything I know. -> Frzurita.https://github.com/Frzurita)
+
+
+---
+⌨️ con ❤️ por [erniker](https://github.com/erniker) 😊
