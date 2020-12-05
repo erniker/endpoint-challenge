@@ -61,6 +61,7 @@ export class OrderRepositoryTypeorm extends Repository<Order>
       order.customerId = customerId
       order.orderMobile = orderMobile
       order.totalPrice = totalPrice
+
       await order.save()
 
     } catch (err) {

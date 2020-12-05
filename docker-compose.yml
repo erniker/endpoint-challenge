@@ -1,4 +1,9 @@
 version: '3.3'
+
+volumes:
+  data:
+    driver: local
+
 services:
   #  Create a service named db.
   db:
@@ -13,7 +18,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=EndpointChallenge
+      - POSTGRES_DB=endpoint-challenge
 
     #   Maps port 5432 (localhost) to port 5432 on the container.
     ports:
@@ -21,16 +26,33 @@ services:
 
     #   Set a volume some that database is not lost after shutting down the container.
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - data:/var/lib/postgresql/data
 
   #  Create a service named nest-api.
-  nest-api:
+  api:
     # Name of image created before
     image: nest-api
 
+    depends_on:
+      - db
+
+    build:
+      context: '.'
+
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_USER_NAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_SYNC=false
+      - DB_TYPE=postgres
+      - DB_PORT=5432
+      - DB_NAME=endpoint-challenge
+      - VERSION=1.0.0-beta
+
     container_name: nest-api
 
-    restart: always
+    restart: unless-stopped
 
     ports:
-      - '3000:3000'
+      - 3000:3000

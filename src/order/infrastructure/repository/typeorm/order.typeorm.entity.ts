@@ -40,7 +40,7 @@ export class Order extends BaseEntity {
     type => OrderMobile,
     orderMobile => orderMobile.order,
     { eager: false, cascade: ['insert', 'update', 'remove'] })
-  public orderMobile!: OrderMobile[];
+  orderMobile!: OrderMobile[];
 
 
 }

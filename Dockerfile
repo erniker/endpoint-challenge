@@ -6,7 +6,7 @@ COPY . .
 EXPOSE 3000
 
 #DEVELOP
-CMD ["yarn", "start:dev"]
+CMD ["sh", "./start.sh"]
 
 #PRODUCTION
 # RUN yarn build

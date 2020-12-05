@@ -1,5 +1,3 @@
-import { OrderMobileDto } from './orderMobile.dto'
-
 export class OrderDto {
     id: string
     customerId: string
