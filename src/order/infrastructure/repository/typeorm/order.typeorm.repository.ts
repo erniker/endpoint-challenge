@@ -8,7 +8,7 @@ import { Order } from './order.typeorm.entity'
 import { OrderRepository } from '../../../domain/repository/order.repository'
 import { OrderDto } from '../../../domain/dto/order.dto'
 import { CreateOrderDto } from '../../../domain/dto/create-order.dto'
-import { UpdateOrderDto } from '../../../domain/dto/update-order.dto'
+// import { UpdateOrderDto } from '../../../domain/dto/update-order.dto'
 
 @EntityRepository(Order)
 export class OrderRepositoryTypeorm extends Repository<Order>
@@ -42,37 +42,37 @@ export class OrderRepositoryTypeorm extends Repository<Order>
     }
   }
 
-  async updateOrder(
-    orderId: string,
-    updateOrder: UpdateOrderDto,
-  ): Promise<void> {
-    try {
+  // async updateOrder(
+  //   orderId: string,
+  //   updateOrder: UpdateOrderDto,
+  // ): Promise<void> {
+  //   try {
 
-      if (!orderId) {
-        throw new NotFoundException("Order doesn't exists")
-      }
+  //     if (!orderId) {
+  //       throw new NotFoundException("Order doesn't exists")
+  //     }
 
-      const { customerId, orderMobile, totalPrice } = updateOrder
+  //     const { customerId, orderMobile, totalPrice } = updateOrder
 
-      const order = await this.getOrderById(orderId)
+  //     const order = await this.getOrderById(orderId)
 
-      console.log(order)
+  //     console.log(order)
 
-      order.customerId = customerId
-      order.orderMobile = orderMobile
-      order.totalPrice = totalPrice
+  //     order.customerId = customerId
+  //     order.orderMobile = orderMobile
+  //     order.totalPrice = totalPrice
 
-      await order.save()
+  //     await order.save()
 
-    } catch (err) {
-      console.log(err)
-      if (err instanceof NotFoundException)
-        throw new NotFoundException("Order doesn't exists")
-      if (err instanceof BadRequestException)
-        throw new BadRequestException()
-      throw new InternalServerErrorException()
-    }
-  }
+  //   } catch (err) {
+  //     console.log(err)
+  //     if (err instanceof NotFoundException)
+  //       throw new NotFoundException("Order doesn't exists")
+  //     if (err instanceof BadRequestException)
+  //       throw new BadRequestException()
+  //     throw new InternalServerErrorException()
+  //   }
+  // }
 
   async getOrderById(orderId: string): Promise<Order> {
     const found = await this.findOne({

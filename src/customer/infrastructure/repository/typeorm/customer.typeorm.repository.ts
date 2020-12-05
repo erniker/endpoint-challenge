@@ -48,13 +48,13 @@ export class CustomerRepositoryTypeorm extends Repository<Customer>
     updateCustomer: UpdateCustomerDto,
   ): Promise<void> {
     try {
-      const { name, surname, email } = updateCustomer
-
-      const customer = await this.getCustomerById(customerId)
 
       if (!customerId) {
         throw new NotFoundException("Customer doesn't exists")
       }
+
+      const { name, surname, email } = updateCustomer
+      const customer = await this.getCustomerById(customerId)
 
       customer.name = name
       customer.surname = surname

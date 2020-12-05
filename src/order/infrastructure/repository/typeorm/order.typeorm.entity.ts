@@ -39,7 +39,7 @@ export class Order extends BaseEntity {
   @OneToMany(
     type => OrderMobile,
     orderMobile => orderMobile.order,
-    { eager: false, cascade: ['insert', 'update', 'remove'] })
+    { eager: true, cascade: ['insert', 'update', 'remove'] })
   orderMobile!: OrderMobile[];
 
 

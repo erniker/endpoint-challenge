@@ -104,7 +104,6 @@ describe('CustomerRepository', () => {
       customerRepository.getCustomerById = jest
         .fn()
         .mockResolvedValue(undefined)
-
       let response
       try {
         response = await customerRepository.updateCustomer(
@@ -186,7 +185,7 @@ describe('CustomerRepository', () => {
       }
       expect(response instanceof InternalServerErrorException).toBe(true)
     })
-    it('Try to delete a non existing contact', async () => {
+    it('Try to delete a non existing customer', async () => {
       customerRepository.getCustomerById = jest
         .fn()
         .mockResolvedValue(undefined)

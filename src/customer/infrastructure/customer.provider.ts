@@ -8,5 +8,5 @@ export const CustomerProviders = [
     useFactory: (connection: Connection) =>
       connection.getCustomRepository(CustomerRepositoryTypeorm),
     inject: ['DATABASE_CONNECTION'],
-  },
+  }
 ]

@@ -4,12 +4,12 @@ import {
     OrderRepository,
 } from '../domain/repository/order.repository'
 import { CreateOrderDto } from '../domain/dto/create-order.dto'
-import { UpdatePrepareOrderDto } from '../domain/dto/update-prepare-order.dto'
+// import { UpdatePrepareOrderDto } from '../domain/dto/update-prepare-order.dto'
 import { PrepareOrderDto } from '../domain/dto/prepare-order.dto'
-import { UpdateOrderDto } from '../domain/dto/update-order.dto'
+// import { UpdateOrderDto } from '../domain/dto/update-order.dto'
 import { OrderDto } from '../domain/dto/order.dto'
 import { MobileCatalogService } from '../../mobileCatalog/application/mobileCatalog.service'
-import { MobileCatalogDto } from 'src/commons/dto/mobileCatalog.dto'
+import { MobileCatalogDto } from './../../commons/dto/mobileCatalog.dto'
 
 @Injectable()
 export class OrderService {
@@ -45,33 +45,33 @@ export class OrderService {
         return this.orderRepository.createOrder(createdOrder)
     }
 
-    async updateOrder(
-        orderId: string,
-        updatePrepareOrder: UpdatePrepareOrderDto,
-    ): Promise<void> {
+    // async updateOrder(
+    //     orderId: string,
+    //     updatePrepareOrder: UpdatePrepareOrderDto,
+    // ): Promise<void> {
 
-        const { customerId, mobileIds } = updatePrepareOrder
+    //     const { customerId, mobileIds } = updatePrepareOrder
 
-        // Get order Mobiles 
-        const mobiles: MobileCatalogDto[] = await this.getOrderMobiles(mobileIds)
+    //     // Get order Mobiles 
+    //     const mobiles: MobileCatalogDto[] = await this.getOrderMobiles(mobileIds)
 
-        const orderMobile = this.updatwOrderMobileObject(orderId, mobiles)
+    //     const orderMobile = this.updatwOrderMobileObject(orderId, mobiles)
 
-        // Check if there is any inconsistense with the mobile in the catalog
-        if (!this.checkOrderIntegrity(mobileIds, mobiles)) {
-            throw new NotFoundException("Any mobile selected doesn't exists")
-        }
+    //     // Check if there is any inconsistense with the mobile in the catalog
+    //     if (!this.checkOrderIntegrity(mobileIds, mobiles)) {
+    //         throw new NotFoundException("Any mobile selected doesn't exists")
+    //     }
 
-        // Calculate final price from catalog
-        const totalPrice = await this.calculateFinalPrice(mobileIds, mobiles)
+    //     // Calculate final price from catalog
+    //     const totalPrice = await this.calculateFinalPrice(mobileIds, mobiles)
 
-        const updateOrder: UpdateOrderDto = {
-            customerId: customerId,
-            orderMobile: orderMobile,
-            totalPrice: totalPrice
-        }
-        return this.orderRepository.updateOrder(orderId, updateOrder)
-    }
+    //     const updateOrder: UpdateOrderDto = {
+    //         customerId: customerId,
+    //         orderMobile: orderMobile,
+    //         totalPrice: totalPrice
+    //     }
+    //     return this.orderRepository.updateOrder(orderId, updateOrder)
+    // }
 
     async getOrders(): Promise<OrderDto[]> {
         return this.orderRepository.getOrders()

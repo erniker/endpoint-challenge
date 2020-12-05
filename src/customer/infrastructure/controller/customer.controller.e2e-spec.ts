@@ -60,7 +60,7 @@ describe('AppController (e2e)', () => {
     it('/customers (POST) wrong params', async () => {
 
       const response = await request(app.getHttpServer())
-        .post('/contacts')
+        .post('/customers')
         .send({
           ...mockCustomer,
           name: 4,
@@ -151,7 +151,7 @@ describe('AppController (e2e)', () => {
     it('/customers/:id (GET) Get customer By Id Happy path', async () => {
       const customer = await createCustomer(app)
       const response = await request(app.getHttpServer())
-        .get(`/contacts/${customer.body.id}`)
+        .get(`/customers/${customer.body.id}`)
       expect(response.status).toBe(200)
       expect(response.body.id).toBeTruthy()
       expect(response.body.name).toBe('pepe')
