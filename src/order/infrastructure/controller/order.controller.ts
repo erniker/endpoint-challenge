@@ -11,7 +11,8 @@ import {
     Get,
     Delete,
 } from '@nestjs/common'
-import { PrepareOrderDto } from 'src/order/domain/dto/prepare-order.dto'
+import { UpdatePrepareOrderDto } from '../../domain/dto/update-prepare-order.dto'
+import { PrepareOrderDto, } from '../../domain/dto/prepare-order.dto'
 import { OrderService } from '../../application/order.service'
 import { CreateOrderDto } from '../../domain/dto/create-order.dto'
 import { OrderDto } from '../../domain/dto/order.dto'
@@ -29,7 +30,7 @@ export class OrderController {
     async createOrder(
         @Body() prepareOrderDto: PrepareOrderDto,
     ): Promise<OrderDto> {
-        const order = await this.orderService.createOrder(prepareOrderDto)
+        const order = this.orderService.createOrder(prepareOrderDto)
         console.log(order)
         return order
     }
@@ -39,8 +40,8 @@ export class OrderController {
     updateOrder(
         @Param('id', ParseUUIDPipe) id: string,
         @Body()
-        updateOrderDto: UpdateOrderDto): Promise<void> {
-        return this.orderService.updateOrder(id, updateOrderDto)
+        UpdatePrepareOrderDto: UpdatePrepareOrderDto): Promise<void> {
+        return this.orderService.updateOrder(id, UpdatePrepareOrderDto)
     }
 
     @Get()

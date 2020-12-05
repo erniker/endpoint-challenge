@@ -89,16 +89,13 @@ export class MobileCatalogRepositoryTypeorm extends Repository<MobileCatalog>
         return found
     }
 
-
     async getMobileByIds(mobileIds: string[]): Promise<MobileCatalog[]> {
         const found = await this.find({
             where: { id: In(mobileIds) },
         })
-
         if (!found) {
             throw new NotFoundException()
         }
-
         return found
     }
 

@@ -45,21 +45,24 @@ export class OrderRepositoryTypeorm extends Repository<Order>
     updateOrder: UpdateOrderDto,
   ): Promise<void> {
     try {
-      const { customerId, orderMobile, totalPrice } = updateOrder
-
-      const order = await this.getOrderById(orderId)
 
       if (!orderId) {
         throw new NotFoundException("Order doesn't exists")
       }
 
+      const { customerId, orderMobile, totalPrice } = updateOrder
+
+      const order = await this.getOrderById(orderId)
+
+      console.log(order)
+
       order.customerId = customerId
       order.orderMobile = orderMobile
       order.totalPrice = totalPrice
-
       await order.save()
 
     } catch (err) {
+      console.log(err)
       if (err instanceof NotFoundException)
         throw new NotFoundException("Order doesn't exists")
       if (err instanceof BadRequestException)
@@ -100,18 +103,4 @@ export class OrderRepositoryTypeorm extends Repository<Order>
       throw new InternalServerErrorException()
     }
   }
-
-
-
-  ///////////////////////77
-
-
-  async getMobilesByOrderId(orderId: string): Promise<MobileCatalogDto[]> {
-    const query = this.createQueryBuilder('orderMobile')
-      .where('orderMobile.orderId = :orderId', { orderId: orderId })
-    const mobiles: MobileCatalogDto[] = await query.getRawMany()
-
-    return mobiles
-  }
-
 }

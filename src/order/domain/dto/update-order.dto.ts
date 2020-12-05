@@ -15,4 +15,5 @@ export class UpdateOrderDto {
     @ApiProperty()
     @IsNotEmpty()
     totalPrice: number
+
 }
