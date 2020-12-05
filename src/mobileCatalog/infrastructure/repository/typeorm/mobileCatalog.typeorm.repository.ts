@@ -1,4 +1,4 @@
-import { Repository, EntityRepository } from 'typeorm'
+import { Repository, EntityRepository, In } from 'typeorm'
 import {
     ConflictException,
     InternalServerErrorException,
@@ -84,6 +84,19 @@ export class MobileCatalogRepositoryTypeorm extends Repository<MobileCatalog>
             throw new NotFoundException(
                 `Contact with ID "${mobileId}" not found`,
             )
+        }
+
+        return found
+    }
+
+
+    async getMobileByIds(mobileIds: string[]): Promise<MobileCatalog[]> {
+        const found = await this.find({
+            where: { id: In(mobileIds) },
+        })
+
+        if (!found) {
+            throw new NotFoundException()
         }
 
         return found

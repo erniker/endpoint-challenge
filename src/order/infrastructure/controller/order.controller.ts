@@ -11,6 +11,7 @@ import {
     Get,
     Delete,
 } from '@nestjs/common'
+import { PrepareOrderDto } from 'src/order/domain/dto/prepare-order.dto'
 import { OrderService } from '../../application/order.service'
 import { CreateOrderDto } from '../../domain/dto/create-order.dto'
 import { OrderDto } from '../../domain/dto/order.dto'
@@ -26,9 +27,9 @@ export class OrderController {
     @Post()
     @UsePipes(ValidationPipe)
     async createOrder(
-        @Body() createOrderDto: CreateOrderDto,
+        @Body() prepareOrderDto: PrepareOrderDto,
     ): Promise<OrderDto> {
-        const order = await this.orderService.createOrder(createOrderDto)
+        const order = await this.orderService.createOrder(prepareOrderDto)
         console.log(order)
         return order
     }

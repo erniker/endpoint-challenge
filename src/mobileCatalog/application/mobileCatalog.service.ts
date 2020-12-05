@@ -38,6 +38,11 @@ export class MobileCatalogService {
         return this.mobileCatalogRepository.getMobileById(mobileId)
     }
 
+    async getMobileByIds(mobilesId: string[]): Promise<MobileCatalogDto[]> {
+        return this.mobileCatalogRepository.getMobileByIds(mobilesId)
+    }
+
+
     async deleteMobile(mobileId: string): Promise<void> {
         return this.mobileCatalogRepository.deleteMobile(mobileId)
     }

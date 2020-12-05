@@ -1,13 +1,16 @@
-import { Injectable, Inject } from '@nestjs/common'
+import { Injectable, Inject, NotFoundException } from '@nestjs/common'
 import {
     ORDER_REPOSITORY,
     OrderRepository,
 } from '../domain/repository/order.repository'
 import { CreateOrderDto } from '../domain/dto/create-order.dto'
+import { PrepareOrderDto } from '../domain/dto/prepare-order.dto'
 import { UpdateOrderDto } from '../domain/dto/update-order.dto'
 import { OrderDto } from '../domain/dto/order.dto'
 import { MobileCatalogService } from '../../mobileCatalog/application/mobileCatalog.service'
 import { MobileCatalogDto } from 'src/commons/dto/mobileCatalog.dto'
+import { monitorEventLoopDelay } from 'perf_hooks'
+import { OrderMobile } from '../infrastructure/repository/typeorm/orderMobile.typeorm.entity'
 
 @Injectable()
 export class OrderService {
@@ -17,12 +20,22 @@ export class OrderService {
         private mobileCatalogService: MobileCatalogService,
     ) { }
 
-    async createOrder(createOrder: CreateOrderDto): Promise<OrderDto> {
+    async createOrder(prepareOrder: PrepareOrderDto): Promise<OrderDto> {
 
-        const { customerId, orderMobile } = createOrder
+        const { customerId, mobileIds } = prepareOrder
 
-        // Calculate Final price from catalog
-        const totalPrice = await this.calculateFinalPrice(orderMobile)
+        // Get order Mobiles
+        const mobiles: MobileCatalogDto[] = await this.getOrderMobiles(mobileIds)
+
+        const orderMobile = this.createOrderMobileObject(mobiles)
+
+        // Check if there is any inconsistense with the mobile in the catalog
+        if (!this.checkOrderIntegrity(mobileIds, mobiles)) {
+            throw new NotFoundException("Any mobile selected doesn't exists")
+        }
+
+        // Calculate final price from catalog
+        const totalPrice = await this.calculateFinalPrice(mobileIds, mobiles)
 
         const createdOrder: CreateOrderDto = {
             customerId: customerId,
@@ -32,7 +45,6 @@ export class OrderService {
         return this.orderRepository.createOrder(createdOrder)
     }
 
-    // Use with caution
     async updateOrder(
         orderId: string,
         updateCostumer: UpdateOrderDto,
@@ -56,15 +68,48 @@ export class OrderService {
     }
 
 
-    async calculateFinalPrice(mobileIds: string[]): Promise<number> {
-        let totalPrice = 0
+    getOrderMobiles(mobileIds: string[]): Promise<MobileCatalogDto[]> {
+        return this.mobileCatalogService.getMobileByIds(mobileIds)
+    }
 
-        for (let i = 0; i < mobileIds.length; i++) {
-            // Get mobileInfo from Catalog
-            const mobile: MobileCatalogDto = await this.mobileCatalogService.getMobileById(mobileIds[i])
 
-            totalPrice = totalPrice + mobile.price
+    checkOrderIntegrity(mobileIds: string[], mobiles: MobileCatalogDto[]): boolean {
+        const uniqueMobileIds = [...new Set(mobileIds)]
+        return uniqueMobileIds.length === mobiles.length
+    }
+
+    calculateFinalPrice(mobileIds: string[], mobiles: MobileCatalogDto[]): number {
+        const mobileConcurrencies = mobileIds.reduce((acc, id) => {
+            if (typeof acc[id] == 'undefined') {
+                acc[id] = 1;
+            } else {
+                acc[id] += 1;
+            }
+            return acc;
+            // acc[id] = acc[id] ? acc[id]++ : 1
+            // return acc
+        }, {})
+
+        return mobiles.reduce((total, mobile) => {
+            total = total + mobile.price * mobileConcurrencies[mobile.id]
+            return total
+        }, 0)
+    }
+
+    createOrderMobileObject(mobiles: MobileCatalogDto[]): any {
+        const orderMobile = []
+        for (let i = 0; i < mobiles.length; i++) {
+            const mobile = {
+                mobileId: mobiles[i].id,
+                price: mobiles[i].price
+            }
+            orderMobile.push(mobile)
         }
-        return totalPrice
+
+        return orderMobile
+
     }
 }
+
+// mobileId: mobile.id,
+//     price: mobile.price

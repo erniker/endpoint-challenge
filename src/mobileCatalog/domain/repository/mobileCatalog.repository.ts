@@ -16,6 +16,8 @@ export interface MobileCatalogRepository {
 
   getMobileById(mobileId: string): Promise<MobileCatalogDto>
 
+  getMobileByIds(mobilesId: string[]): Promise<MobileCatalogDto[]>
+
   deleteMobile(mobileId: string): Promise<void>
 }
 

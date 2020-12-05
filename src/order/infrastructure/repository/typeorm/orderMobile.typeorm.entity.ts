@@ -15,37 +15,36 @@ import { Order } from '../../../../order/infrastructure/repository/typeorm/order
 
 
 @Entity()
-@Unique(['orderId'])
 export class OrderMobile extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id: string
+  id: string
 
   @Column()
-  public orderId: string
+  orderId: string
 
   @Column()
-  public mobileId: string
+  mobileId: string
 
   @Column()
-  public price: number
+  price: number
 
   @CreateDateColumn()
-  public createdAt: string
+  createdAt: string
 
   @UpdateDateColumn()
-  public updatedAt: string
+  updatedAt: string
 
   @ManyToOne(
     type => Order,
     order => order.orderMobile,
     { onDelete: 'CASCADE' },
   )
-  public order!: Order
+  order!: Order
 
   @ManyToOne(
     type => MobileCatalog,
     mobileCatalog => mobileCatalog.orderMobile,
   )
-  public mobile!: MobileCatalog
+  mobile!: MobileCatalog
 
 }

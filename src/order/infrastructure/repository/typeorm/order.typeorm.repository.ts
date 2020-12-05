@@ -20,8 +20,6 @@ export class OrderRepositoryTypeorm extends Repository<Order>
   ): Promise<OrderDto> {
     try {
 
-      //console.log(createOrder)
-
       const { customerId, orderMobile, totalPrice } = createOrder
 
       const order = this.create()
@@ -34,6 +32,7 @@ export class OrderRepositoryTypeorm extends Repository<Order>
       return order
 
     } catch (error) {
+      console.log(error)
       if (error instanceof BadRequestException)
         throw new BadRequestException()
 
