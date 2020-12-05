@@ -11,7 +11,7 @@ import { psCodes } from '../../../../commons/psCodes.enum'
 
 describe('MobileCatalogRepository', () => {
   let mobileCatalogRepository
-  const mockCreateOrUpdateMobileCatalogDtoSuccess: CreateMobileCatalogDto = {
+  const mockCreateOrupdateMobileDtoSuccess: CreateMobileCatalogDto = {
     image: 'https://imagen.jpg',
     name: 'muchoPhone',
     description: 'Movil de la empresa Mucho',
@@ -28,7 +28,7 @@ describe('MobileCatalogRepository', () => {
     )
   })
 
-  describe('method: createMobileCatalog', () => {
+  describe('method: createMobile', () => {
     let save
     beforeEach(() => {
       save = jest.fn()
@@ -38,8 +38,8 @@ describe('MobileCatalogRepository', () => {
     it('Happy path', () => {
       save.mockResolvedValue(undefined)
       expect(
-        mobileCatalogRepository.createMobileCatalog(
-          mockCreateOrUpdateMobileCatalogDtoSuccess,
+        mobileCatalogRepository.createMobile(
+          mockCreateOrupdateMobileDtoSuccess,
         ),
       ).resolves.not.toThrow()
     })
@@ -48,8 +48,8 @@ describe('MobileCatalogRepository', () => {
       save.mockRejectedValue({ code: psCodes.ConflictError })
       let response
       try {
-        response = await mobileCatalogRepository.createMobileCatalog(
-          mockCreateOrUpdateMobileCatalogDtoSuccess
+        response = await mobileCatalogRepository.createMobile(
+          mockCreateOrupdateMobileDtoSuccess
         )
       } catch (err) {
         response = err
@@ -61,8 +61,8 @@ describe('MobileCatalogRepository', () => {
       save.mockRejectedValue({ code: 'UNKNOWN_ERROR' }) // unhandled error code
       let response
       try {
-        response = await mobileCatalogRepository.createMobileCatalog(
-          mockCreateOrUpdateMobileCatalogDtoSuccess
+        response = await mobileCatalogRepository.createMobile(
+          mockCreateOrupdateMobileDtoSuccess
         )
       } catch (err) {
         response = err
@@ -71,19 +71,19 @@ describe('MobileCatalogRepository', () => {
     })
   })
 
-  describe('method: updateMobileCatalog', () => {
+  describe('method: updateMobile', () => {
     let save
     beforeEach(() => {
       save = jest.fn()
-      mobileCatalogRepository.getMobileCatalogById = jest.fn().mockReturnValue({ save })
+      mobileCatalogRepository.getMobilesById = jest.fn().mockReturnValue({ save })
     })
 
     it('Happy path', () => {
       save.mockResolvedValue(undefined)
       expect(
-        mobileCatalogRepository.updateMobileCatalog(
+        mobileCatalogRepository.updateMobile(
           mockMobileCatalogId,
-          mockCreateOrUpdateMobileCatalogDtoSuccess
+          mockCreateOrupdateMobileDtoSuccess
         ),
       ).resolves.not.toThrow()
     })
@@ -92,9 +92,9 @@ describe('MobileCatalogRepository', () => {
       save.mockRejectedValue({ code: 'UNKNOWN_ERROR' }) // unhandled error code
       let response
       try {
-        response = await mobileCatalogRepository.updateMobileCatalog(
+        response = await mobileCatalogRepository.updateMobile(
           mockMobileCatalogId,
-          mockCreateOrUpdateMobileCatalogDtoSuccess
+          mockCreateOrupdateMobileDtoSuccess
         )
       } catch (err) {
         response = err
@@ -102,14 +102,14 @@ describe('MobileCatalogRepository', () => {
       expect(response instanceof InternalServerErrorException).toBe(true)
     })
     it('Try to change a non existing mobileCatalog', async () => {
-      mobileCatalogRepository.getMobileCatalogById = jest
+      mobileCatalogRepository.getMobilesById = jest
         .fn()
         .mockResolvedValue(undefined)
       let response
       try {
-        response = await mobileCatalogRepository.updateMobileCatalog(
+        response = await mobileCatalogRepository.updateMobile(
           mockMobileCatalogId,
-          mockCreateOrUpdateMobileCatalogDtoSuccess
+          mockCreateOrupdateMobileDtoSuccess
         )
       } catch (err) {
         response = err
@@ -142,7 +142,7 @@ describe('MobileCatalogRepository', () => {
     const mockCustomersArrayLength = mockCustomersArray.length
     it('Happy path', async () => {
       mobileCatalogRepository.find = jest.fn().mockReturnValue(mockCustomersArray)
-      const response = await mobileCatalogRepository.getMobileCatalog()
+      const response = await mobileCatalogRepository.getMobiles()
 
       expect(response.length).toBe(mockCustomersArrayLength)
     })
@@ -150,7 +150,7 @@ describe('MobileCatalogRepository', () => {
       let response
       mobileCatalogRepository.find = jest.fn().mockRejectedValue(undefined)
       try {
-        response = await mobileCatalogRepository.getMobileCatalog()
+        response = await mobileCatalogRepository.getMobiles()
       } catch (err) {
         response = err
       }
@@ -159,11 +159,11 @@ describe('MobileCatalogRepository', () => {
     })
   })
 
-  describe('method: deleteMobileCatalog', () => {
+  describe('method: deleteMobile', () => {
     let remove
     beforeEach(() => {
       remove = jest.fn()
-      mobileCatalogRepository.getMobileCatalogById = jest
+      mobileCatalogRepository.getMobilesById = jest
         .fn()
         .mockReturnValue({ remove })
     })
@@ -171,7 +171,7 @@ describe('MobileCatalogRepository', () => {
     it('Happy path', async () => {
       remove.mockResolvedValue(undefined)
       expect(
-        mobileCatalogRepository.deleteMobileCatalog(mockMobileCatalogId),
+        mobileCatalogRepository.deleteMobile(mockMobileCatalogId),
       ).resolves.not.toThrow()
     })
 
@@ -179,7 +179,7 @@ describe('MobileCatalogRepository', () => {
       remove.mockRejectedValue({ code: 'UNKNOWN_ERROR' }) // unhandled error code
       let response
       try {
-        response = await mobileCatalogRepository.deleteMobileCatalog(
+        response = await mobileCatalogRepository.deleteMobile(
           mockMobileCatalogId
         )
       } catch (err) {
@@ -188,12 +188,12 @@ describe('MobileCatalogRepository', () => {
       expect(response instanceof InternalServerErrorException).toBe(true)
     })
     it('Try to delete a non existing mobileCatalog', async () => {
-      mobileCatalogRepository.getMobileCatalogById = jest
+      mobileCatalogRepository.getMobilesById = jest
         .fn()
         .mockResolvedValue(undefined)
       let response
       try {
-        response = await mobileCatalogRepository.deleteMobileCatalog(
+        response = await mobileCatalogRepository.deleteMobile(
           mockMobileCatalogId
         )
       } catch (err) {
