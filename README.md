@@ -76,7 +76,12 @@ To delete container:
 docker-compose down
 ```
 
+## Explore 🗺️
 
+- To explore de api, run your explorer and type:
+```bash
+http://localhost:3000/api/
+```
 
 ## Built with 🛠️
 
