@@ -112,8 +112,6 @@ describe('OrderRepository', () => {
       },
     ]
 
-
-
     const mockCustomersArrayLength = mockOrdersArray.length
     it('Happy path', async () => {
       orderRepository.find = jest.fn().mockReturnValue(mockOrdersArray)
