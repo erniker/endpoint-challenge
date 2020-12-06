@@ -10,8 +10,8 @@ import { OrderDto } from '../../../../order/domain/dto/order.dto'
 describe('OrderRepository', () => {
   let orderRepository
   const mockPrepareOrderDtoSuccess: PrepareOrderDto = {
-    "customerId": "z99z99z9-9z99-999z-9z99-999999z9zzz9",
-    "mobileIds": [
+    customerId: "z99z99z9-9z99-999z-9z99-999999z9zzz9",
+    mobileIds: [
       "z88z99z9-9z99-999z-9z99-999999z9zzz9"
     ]
   }

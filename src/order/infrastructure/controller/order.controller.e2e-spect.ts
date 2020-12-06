@@ -7,8 +7,8 @@ import { getConnection } from 'typeorm'
 const mockId = 'z99z99z9-9z99-999z-9z99-999999z9zzz9'
 
 const mockOrder = {
-    "customerId": "z99z99z9-9z99-999z-9z99-999999z9zzz9",
-    "mobileIds": [
+    customerId: "z99z99z9-9z99-999z-9z99-999999z9zzz9",
+    mobileIds: [
         "z88z99z9-9z99-999z-9z99-999999z9zzz9"
     ]
 }
@@ -25,7 +25,7 @@ const mockCreatedOrder = {
             updatedAt: "2020-12-06T10:23:58.317Z"
         }
     ],
-    "totalPrice": 9999,
+    totalPrice: 9999,
 }
 const MockOrderNonExixitingId = {
     customerId: "z99z99z9-9z99-999z-9z99-999999z9zzz9",
