@@ -49,10 +49,6 @@ export class CustomerRepositoryTypeorm extends Repository<Customer>
   ): Promise<void> {
     try {
 
-      if (!customerId) {
-        throw new NotFoundException("Customer doesn't exists")
-      }
-
       const { name, surname, email } = updateCustomer
       const customer = await this.getCustomerById(customerId)
 
@@ -74,17 +70,22 @@ export class CustomerRepositoryTypeorm extends Repository<Customer>
   }
 
   async getCustomerById(customerId: string): Promise<Customer> {
-    const found = await this.findOne({
-      where: { id: customerId },
-    })
+    try {
+      const found = await this.findOne({
+        where: { id: customerId },
+      })
 
-    if (!found) {
-      throw new NotFoundException(
-        `Customer with ID "${customerId}" not found`,
-      )
+      if (!found) {
+        throw new NotFoundException(
+          `Customer with ID "${customerId}" not found`,
+        )
+      }
+
+      return found
     }
-
-    return found
+    catch (err) {
+      throw new InternalServerErrorException()
+    }
   }
 
   async getCustomers(): Promise<CustomerDto[]> {

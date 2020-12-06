@@ -30,7 +30,7 @@ export class OrderController {
     async createOrder(
         @Body() prepareOrderDto: PrepareOrderDto,
     ): Promise<OrderDto> {
-        const order = this.orderService.createOrder(prepareOrderDto)
+        const order = await this.orderService.createOrder(prepareOrderDto)
         console.log(order)
         return order
     }

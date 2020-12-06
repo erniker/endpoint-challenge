@@ -11,7 +11,7 @@ const mockCustomer = {
   surname: 'pepón',
   email: 'pepepepon@123.com',
 }
-const MockContactNonExixitingId = {
+const MockCustomerNonExixitingId = {
   name: 'pepe',
   surname: 'pepón',
   email: 'pepepepon@123.com',
@@ -102,7 +102,7 @@ describe('AppController (e2e)', () => {
     it('/customers/:id (PUT) Customer id does not exist', async () => {
       const response = await request(app.getHttpServer())
         .put(`/customers/${mockId}`)
-        .send(MockContactNonExixitingId)
+        .send(MockCustomerNonExixitingId)
       expect(response.status).toBe(400)
     })
 

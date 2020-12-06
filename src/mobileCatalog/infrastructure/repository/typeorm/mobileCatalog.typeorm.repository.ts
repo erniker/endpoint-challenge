@@ -53,10 +53,6 @@ export class MobileCatalogRepositoryTypeorm extends Repository<MobileCatalog>
 
             const mobilefound = await this.getMobileById(mobileId)
 
-            if (!mobilefound) {
-                throw new BadRequestException()
-            }
-
             mobilefound.image = image
             mobilefound.name = name
             mobilefound.description = description
@@ -68,7 +64,7 @@ export class MobileCatalogRepositoryTypeorm extends Repository<MobileCatalog>
             if (err.code == psCodes.ConflictError)
                 throw new ForbiddenException('The name of mobile already exists')
             if (err instanceof NotFoundException)
-                throw new NotFoundException("The name of mobile doesn't exists")
+                throw new NotFoundException("The mobile doesn't exists")
             if (err instanceof BadRequestException)
                 throw new BadRequestException()
             throw new InternalServerErrorException()
@@ -76,27 +72,35 @@ export class MobileCatalogRepositoryTypeorm extends Repository<MobileCatalog>
     }
 
     async getMobileById(mobileId: string): Promise<MobileCatalog> {
-        const found = await this.findOne({
-            where: { id: mobileId },
-        })
-
-        if (!found) {
-            throw new NotFoundException(
-                `Contact with ID "${mobileId}" not found`,
-            )
+        try {
+            const found = await this.findOne({
+                where: { id: mobileId },
+            })
+            if (!found) {
+                throw new NotFoundException(
+                    `Contact with ID "${mobileId}" not found`,
+                )
+            }
+            return found
         }
-
-        return found
+        catch (err) {
+            throw new InternalServerErrorException()
+        }
     }
 
     async getMobileByIds(mobileIds: string[]): Promise<MobileCatalog[]> {
-        const found = await this.find({
-            where: { id: In(mobileIds) },
-        })
-        if (!found) {
-            throw new NotFoundException()
+        try {
+            const found = await this.find({
+                where: { id: In(mobileIds) },
+            })
+            if (!found) {
+                throw new NotFoundException()
+            }
+            return found
         }
-        return found
+        catch (err) {
+            throw new InternalServerErrorException()
+        }
     }
 
     async getMobiles(): Promise<MobileCatalogDto[]> {
@@ -108,7 +112,7 @@ export class MobileCatalogRepositoryTypeorm extends Repository<MobileCatalog>
             })
         } catch (err) {
             if (err instanceof NotFoundException)
-                throw new NotFoundException("Customer doesn't exists")
+                throw new NotFoundException("Mobile doesn't exists")
             if (err instanceof BadRequestException)
                 throw new BadRequestException()
             throw new InternalServerErrorException()

@@ -5,9 +5,11 @@ import {
   ConflictException,
   InternalServerErrorException,
   BadRequestException,
+  NotFoundException,
 } from '@nestjs/common'
 import { CustomerDto } from '../../../domain/dto/customer.dto'
 import { psCodes } from '../../../../commons/psCodes.enum'
+import { CustomerService } from 'src/customer/application/customer.service'
 
 describe('CustomerRepository', () => {
   let customerRepository
@@ -16,7 +18,7 @@ describe('CustomerRepository', () => {
     surname: 'pepón',
     email: 'pepepepon@123.com',
   }
-  const mockCustomerId = 'z99z99z9-9z99-999z-9z99-999999z9zzz9'
+  const mockCustomerId = 'ada36a72-9f56-4587-8fae-ac844418c52c'
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -40,7 +42,8 @@ describe('CustomerRepository', () => {
         customerRepository.createCustomer(
           mockCreateOrUpdateCustomerDtoSuccess,
         ),
-      ).resolves.not.toThrow()
+      )
+        .resolves.not.toThrow()
     })
 
     it('Customer name already exists', async () => {
@@ -100,21 +103,6 @@ describe('CustomerRepository', () => {
       }
       expect(response instanceof InternalServerErrorException).toBe(true)
     })
-    it('Try to change a non existing customer', async () => {
-      customerRepository.getCustomerById = jest
-        .fn()
-        .mockResolvedValue(undefined)
-      let response
-      try {
-        response = await customerRepository.updateCustomer(
-          mockCustomerId,
-          mockCreateOrUpdateCustomerDtoSuccess
-        )
-      } catch (err) {
-        response = err
-      }
-      expect(response instanceof BadRequestException).toBe(true)
-    })
   })
 
   describe('method: getCustomers', () => {
@@ -168,27 +156,12 @@ describe('CustomerRepository', () => {
 
     it('Happy path', async () => {
       remove.mockResolvedValue(undefined)
-      expect(
-        customerRepository.deleteCustomer(mockCustomerId),
+      expect(customerRepository.deleteCustomer(mockCustomerId),
       ).resolves.not.toThrow()
     })
 
     it('Customer delete unknown issue', async () => {
       remove.mockRejectedValue({ code: 'UNKNOWN_ERROR' }) // unhandled error code
-      let response
-      try {
-        response = await customerRepository.deleteCustomer(
-          mockCustomerId
-        )
-      } catch (err) {
-        response = err
-      }
-      expect(response instanceof InternalServerErrorException).toBe(true)
-    })
-    it('Try to delete a non existing customer', async () => {
-      customerRepository.getCustomerById = jest
-        .fn()
-        .mockResolvedValue(undefined)
       let response
       try {
         response = await customerRepository.deleteCustomer(

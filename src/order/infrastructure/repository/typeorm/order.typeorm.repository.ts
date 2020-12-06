@@ -29,12 +29,9 @@ export class OrderRepositoryTypeorm extends Repository<Order>
 
       await order.save()
 
-      console.log(order)
-
       return order
 
     } catch (error) {
-      console.log(error)
       if (error instanceof BadRequestException)
         throw new BadRequestException()
 

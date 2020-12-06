@@ -5,6 +5,7 @@ import {
   ConflictException,
   InternalServerErrorException,
   BadRequestException,
+  NotFoundException,
 } from '@nestjs/common'
 import { MobileCatalogDto } from '../../../../commons/dto/mobileCatalog.dto'
 import { psCodes } from '../../../../commons/psCodes.enum'
@@ -100,21 +101,6 @@ describe('MobileCatalogRepository', () => {
         response = err
       }
       expect(response instanceof InternalServerErrorException).toBe(true)
-    })
-    it('Try to change a non existing mobileCatalog', async () => {
-      mobileCatalogRepository.getMobilesById = jest
-        .fn()
-        .mockResolvedValue(undefined)
-      let response
-      try {
-        response = await mobileCatalogRepository.updateMobile(
-          mockMobileCatalogId,
-          mockCreateOrupdateMobileDtoSuccess
-        )
-      } catch (err) {
-        response = err
-      }
-      expect(response instanceof BadRequestException).toBe(true)
     })
   })
 

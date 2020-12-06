@@ -88,10 +88,13 @@ export class OrderService {
 
     async getOrderMobiles(mobileIds: string[]): Promise<MobileCatalogDto[]> {
         const uniqueMobiles: MobileCatalogDto[] = await this.mobileCatalogService.getMobileByIds(mobileIds)
-
         const orderMobile: MobileCatalogDto[] = []
         for (let i = 0; i < mobileIds.length; i++) {
             const found: MobileCatalogDto = uniqueMobiles.find(mobile => mobile.id == mobileIds[i])
+
+            if (typeof found == 'undefined') {
+                throw new NotFoundException("Any selected Mobile doesn't exists")
+            }
             orderMobile.push(found)
         }
         return orderMobile
@@ -144,18 +147,18 @@ export class OrderService {
         return orderMobile
     }
 
-    updatwOrderMobileObject(orderId: string, mobiles: MobileCatalogDto[]): any {
+    // updatwOrderMobileObject(orderId: string, mobiles: MobileCatalogDto[]): any {
 
-        const orderMobile = []
-        for (let i = 0; i < mobiles.length; i++) {
-            const mobile = {
-                orderId: orderId,
-                mobileId: mobiles[i].id,
-                price: mobiles[i].price
-            }
+    //     const orderMobile = []
+    //     for (let i = 0; i < mobiles.length; i++) {
+    //         const mobile = {
+    //             orderId: orderId,
+    //             mobileId: mobiles[i].id,
+    //             price: mobiles[i].price
+    //         }
 
-            orderMobile.push(mobile)
-        }
-        return orderMobile
-    }
+    //         orderMobile.push(mobile)
+    //     }
+    //     return orderMobile
+    // }
 }
