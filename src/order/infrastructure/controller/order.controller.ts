@@ -1,7 +1,6 @@
 import {
     Controller,
     Post,
-    Put,
     Body,
     Param,
     UsePipes,
@@ -11,12 +10,9 @@ import {
     Get,
     Delete,
 } from '@nestjs/common'
-// import { UpdatePrepareOrderDto } from '../../domain/dto/update-prepare-order.dto'
 import { PrepareOrderDto, } from '../../domain/dto/prepare-order.dto'
 import { OrderService } from '../../application/order.service'
-// import { CreateOrderDto } from '../../domain/dto/create-order.dto'
 import { OrderDto } from '../../domain/dto/order.dto'
-// import { UpdateOrderDto } from '../../domain/dto/update-order.dto'
 
 @Controller('orders')
 export class OrderController {
@@ -34,15 +30,6 @@ export class OrderController {
         console.log(order)
         return order
     }
-
-    // @Put('/:id')
-    // @UsePipes(ValidationPipe)
-    // updateOrder(
-    //     @Param('id', ParseUUIDPipe) id: string,
-    //     @Body()
-    //     UpdatePrepareOrderDto: UpdatePrepareOrderDto): Promise<void> {
-    //     return this.orderService.updateOrder(id, UpdatePrepareOrderDto)
-    // }
 
     @Get()
     async getOrders(): Promise<OrderDto[]> {

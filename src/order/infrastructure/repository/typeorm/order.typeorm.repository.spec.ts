@@ -3,13 +3,9 @@ import { OrderRepositoryTypeorm } from './order.typeorm.repository'
 import { CreateOrderDto } from '../../../domain/dto/create-order.dto'
 import { PrepareOrderDto } from '../../../domain/dto/prepare-order.dto'
 import {
-  ConflictException,
   InternalServerErrorException,
-  BadRequestException,
-  NotFoundException,
 } from '@nestjs/common'
 import { OrderDto } from '../../../../order/domain/dto/order.dto'
-import { psCodes } from '../../../../commons/psCodes.enum'
 
 describe('OrderRepository', () => {
   let orderRepository

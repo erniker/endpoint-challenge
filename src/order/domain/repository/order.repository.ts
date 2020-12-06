@@ -6,10 +6,7 @@ export interface OrderRepository {
   createOrder(
     createOrder: CreateOrderDto,
   ): Promise<OrderDto>
-  // updateOrder(
-  //   orderId: string,
-  //   updateOrder: UpdateOrderDto,
-  // ): Promise<void>
+
   getOrders(): Promise<OrderDto[]>
 
   getOrderById(orderId: string): Promise<OrderDto>
