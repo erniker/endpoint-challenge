@@ -7,39 +7,39 @@ import { getConnection } from 'typeorm'
 const mockId = 'z99z99z9-9z99-999z-9z99-999999z9zzz9'
 
 const mockOrder = {
-    customerId: "z99z99z9-9z99-999z-9z99-999999z9zzz9",
+    customerId: "bac7dd1f-252d-447b-ad7a-7bbc9c40c212",
     mobileIds: [
-        "z88z99z9-9z99-999z-9z99-999999z9zzz9"
+        "ada36a71-9f56-4587-8fae-ac844418c52c"
     ]
 }
 
 const mockCreatedOrder = {
-    customerId: "z99z99z9-9z99-999z-9z99-999999z9zzz9",
+    customerId: "bac7dd1f-252d-447b-ad7a-7bbc9c40c212",
     orderMobile: [
         {
-            mobileId: "z88z99z9-9z99-999z-9z99-999999z9zzz9",
-            price: 9999,
+            mobileId: "ada36a71-9f56-4587-8fae-ac844418c52c",
+            price: 909,
             orderId: "z99z99z9-9z99-999z-9z99-999999z9zzz9",
             id: "fce5740f-da0f-4b1b-a7f9-57f5ecceea92",
             createdAt: "2020-12-06T10:23:58.317Z",
             updatedAt: "2020-12-06T10:23:58.317Z"
         }
     ],
-    totalPrice: 9999,
+    totalPrice: 909,
 }
 const MockOrderNonExixitingId = {
-    customerId: "z99z99z9-9z99-999z-9z99-999999z9zzz9",
+    customerId: "bac7dd1f-252d-447b-ad7a-7bbc9c40c212",
     orderMobile: [
         {
-            mobileId: "z88z99z9-9z99-999z-9z99-999999z9zzz9",
-            price: 9999,
+            mobileId: "ada36a71-9f56-4587-8fae-ac844418c52c",
+            price: 909,
             orderId: "z99z99z9-9z99-999z-9z99-999999z9zzz9",
             id: "fce5740f-da0f-4b1b-a7f9-57f5ecceea92",
             createdAt: "2020-12-06T10:23:58.317Z",
             updatedAt: "2020-12-06T10:23:58.317Z"
         }
     ],
-    "totalPrice": 9999,
+    totalPrice: 909,
     id: mockId
 }
 
